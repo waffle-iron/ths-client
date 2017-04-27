@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="w3-main w3-container" style="margin-left:320px;">
+<i class="fa fa-bars w3-button w3-white w3-hide-large w3-xlarge w3-margin-left w3-margin-top" onclick="w3_open()"></i>
+  <h2>Sign Up</h2>
+  <form action="" method=post>
+    <dl>
+      <dt>First Name:
+      <dd><input type=text name=first_name id="first_name" value="{{ request.form.first_name }}" required>
+        <dt>Last Name:
+      <dd><input type=text name=last_name id="last_name" value="{{ request.form.last_name }}" required>
+        <dt>Email:
+      <dd><input type=email name=email id="email" value="{{ request.form.email }}" required>
+      <dt>Password:
+      <dd><input type=password name=password id="password" value="{{ request.form.password }}" required>
+      <dd><input type=submit value=SignUp>
+    </dl>
+  </form>
+</div>
+{% endblock %}
