@@ -1,17 +1,150 @@
-<!doctype html>
-<title>Flaskr</title>
+<!DOCTYPE html>
+<html>
+<title>Twitter Health Surveillance</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link href='https://fonts.googleapis.com/css?family=RobotoDraft' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
-<div class=page>
-  <h1>Flaskr</h1>
-  <div class=metanav>
-  {% if not session.logged_in %}
-    <a href="{{ url_for('login') }}">log in</a>
+<body>
+
+<!-- Side Navigation -->
+<nav class="w3-sidebar w3-bar-block w3-collapse w3-white w3-card-2" style="z-index:3;width:320px;" id="mySidebar">
+    <h3>THS</h3>
+  <a href="javascript:void(0)" onclick="w3_close()" title="Close Sidemenu"
+  class="w3-bar-item w3-button w3-hide-large w3-large">Close <i class="fa fa-remove"></i></a>
+    <a href="{{  url_for('home')  }}" class="w3-bar-item w3-button"><i class="fa fa-home w3-margin-right"></i>Home</a>
+      <a href="{{  url_for('about')  }}" class="w3-bar-item w3-button"><i class="fa fa-book w3-margin-right"></i>About</a>
+
+    {% if not g.user.is_authenticated %}
+
+
+      <a href="{{ url_for('register') }}" class="w3-bar-item w3-button"><i class="fa fa-arrow-circle-o-up w3-margin-right"></i>Sign Up</a>
+    <a href="{{ url_for('login') }}" class="w3-bar-item w3-button"><i class="fa fa-sign-in w3-margin-right"></i>Sign In</a>
+
+
   {% else %}
-    <a href="{{ url_for('logout') }}">log out</a>
-  {% endif %}
+    <a href="{{  url_for('edit_info')  }}" class="w3-bar-item w3-button"><i class="fa fa-pencil w3-margin-right"></i>Edit Information</a>
+  <a id="myBtn" onclick="myFunc('Demo1')" href="javascript:void(0)" class="w3-bar-item w3-button"><i class="fa fa-inbox w3-margin-right"></i>Tweet Inbox (TWEETS LEFT)<i class="fa fa-caret-down w3-margin-left"></i></a>
+  <div id="Demo1" class="w3-hide">
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey" onclick="openTweet('Borge');w3_close();" id="firstTab">
+      <div class="w3-container">
+          <div class="tweets">
+            <h6>Sample Tweet 1 Preview Sample Tweet 1 Preview Sample Tweet 1 Preview Sample Tweet 1 Preview</h6>
+          </div>
+      </div>
+    </a>
+     <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey" onclick="openTweet('Jane');w3_close();" id="secondTab">
+      <div class="w3-container">
+          <div class="tweets">
+            <h6>Sample Tweet 2 Preview Sample Tweet 2 Preview Sample Tweet 2 Preview Sample Tweet 2 Preview</h6>
+          </div>
+      </div>
+    </a>
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey" onclick="openTweet('John');w3_close();" id="thirdTab">
+      <div class="w3-container">
+          <div class="tweets">
+            <h6>Sample Tweet 3 Preview Sample Tweet 3 Preview Sample Tweet 3 Preview Sample Tweet 3 Preview</h6>
+          </div>
+      </div>
+    </a>
   </div>
-  {% for message in get_flashed_messages() %}
+    <a href="{{ url_for('logout') }}" class="w3-bar-item w3-button"><i class="fa fa-sign-out w3-margin-right"></i>Sign Out</a>
+
+    {% endif %}
+
+</nav>
+
+<!-- Overlay effect when opening the side navigation on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="Close Sidemenu" id="myOverlay"></div>
+
+{% for message in get_flashed_messages() %}
     <div class=flash>{{ message }}</div>
-  {% endfor %}
-  {% block body %}{% endblock %}
+{% endfor %}
+<!--Page Content-->
+
+{% block body %}{% endblock %}
+
+
+<div class="main" style="margin-left:320px;" id="tweets">
+<i class="fa fa-bars w3-button w3-white w3-hide-large w3-xlarge w3-margin-left w3-margin-top" onclick="w3_open()"></i>
+<div id="Borge" class="w3-container person" style="display:none">
+  <br>
+    <h4><i></i>Sample Tweet 1</h4>
+      <button type="submit" onclick="document.getElementById('firstTab').style.display = 'none';document.getElementById('Borge').innerHTML = 'Your classification has been recorded'"> <!--Write action-->
+			Negative</button>
+		<button type="submit" onclick="document.getElementById('firstTab').style.display = 'none';document.getElementById('Borge').innerHTML = 'Your classification has been recorded'"> <!--Write action-->
+			Neutral</button>
+		<button type="submit" onclick="document.getElementById('firstTab').style.display = 'none';document.getElementById('Borge').innerHTML = 'Your classification has been recorded'"> <!--Write action-->
+			Positive</button>
 </div>
+
+<div id="Jane" class="w3-container person" style="display:none">
+  <br>
+    <h4><i></i>Sample Tweet 2</h4>
+      <button type="submit" onclick="document.getElementById('secondTab').style.display = 'none';document.getElementById('Jane').innerHTML = 'Your classification has been recorded'"> <!--Write action-->
+			Negative</button>
+		<button type="submit" onclick="document.getElementById('secondTab').style.display = 'none';document.getElementById('Jane').innerHTML = 'Your classification has been recorded'"> <!--Write action-->
+			Neutral</button>
+		<button type="submit" onclick="document.getElementById('secondTab').style.display = 'none';document.getElementById('Jane').innerHTML = 'Your classification has been recorded'"> <!--Write action-->
+			Positive</button>
+</div>
+
+<div id="John" class="w3-container person" style="display:none">
+  <br>
+  <h4><i></i>Sample Tweet 3</h4>
+  <button type="submit" onclick="document.getElementById('thirdTab').style.display = 'none';document.getElementById('John').innerHTML = 'Your classification has been recorded'"> <!--Write action-->
+			Negative</button>
+		<button type="submit" onclick="document.getElementById('thirdTab').style.display = 'none';document.getElementById('John').innerHTML = 'Your classification has been recorded'"> <!--Write action-->
+			Neutral</button>
+		<button type="submit" onclick="document.getElementById('thirdTab').style.display = 'none';document.getElementById('John').innerHTML = 'Your classification has been recorded'"> <!--Write action-->
+			Positive</button>
+</div>
+</div>
+<script>
+var openInbox = document.getElementById("myBtn");
+openInbox.click();
+
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+
+function myFunc(id) {
+    var x = document.getElementById(id);
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+        x.previousElementSibling.className += " w3-red";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+        x.previousElementSibling.className =
+        x.previousElementSibling.className.replace(" w3-red", "");
+    }
+}
+
+function openTweet(personName) {
+    var i;
+    var x = document.getElementsByClassName("person");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";
+    }
+    x = document.getElementsByClassName("w3-main");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";
+    }
+    x = document.getElementsByClassName("test");
+    for (i = 0; i < x.length; i++) {
+       x[i].className = x[i].className.replace(" w3-light-grey", "");
+    }
+    document.getElementById(personName).style.display = "block";
+    event.currentTarget.className += " w3-light-grey";
+}
+</script>
+
+</body>
+</html>
