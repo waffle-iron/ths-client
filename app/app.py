@@ -3,8 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, g, redirect, url_for, \
      render_template, flash
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
+from flask_assets import Environment, Bundle
 
-
+# Flask Init
 app = Flask(__name__)  # create the application instance :)
 app.config.from_object(__name__)  # load config from this file, app.py
 login_manager = LoginManager()
@@ -15,7 +16,35 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./test.db'
 app.config['SECRET_KEY'] = 'SECRETKEY'
 db = SQLAlchemy(app)
 
+# Flask-Assets Bundle Registration
+assets = Environment(app)
+
+vendor_bundle = Bundle(
+    'bower_components/jquery/dist/jquery.js',
+    'bower_components/angular/index.js',
+    'bower_components/angular-ui-router/release/angular-ui-router.js',
+    'bower_components/bootstrap/dist/js/bootstrap.js',
+    'bower_components/moment/moment.js',
+    filters='jsmin',
+    output='build/vendor.min.js'
+)
+
+style_bundle = Bundle(
+    'bower_components/bootstrap/dist/css/bootstrap.css',
+    'bower_components/bootstrap/dist/css/bootstrap-theme.css',
+    'bower_components/font-awesome/css/font-awesome.css',
+    filters='cssmin',
+    output='build/style.min.css'
+)
+
+assets.register('vendor', vendor_bundle)
+assets.register('style', style_bundle)
+
+
 # Load default config and override config from an environment variable
+
+if __name__ == "__main__":
+    app.run(debug=True)
 
 
 class User(db.Model):

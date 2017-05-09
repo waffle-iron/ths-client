@@ -91,3 +91,7 @@ ths-client/
 
 # SQLlite3 db
 app/app.db
+
+# NPM / Bower
+app/static/bower_components
+node_modules
