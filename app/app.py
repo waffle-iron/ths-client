@@ -2,9 +2,36 @@ import os
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
+from flask_assets import Environment, Bundle
 
+# Flask Init
 app = Flask(__name__)  # create the application instance :)
 app.config.from_object(__name__)  # load config from this file , app.py
+
+# Flask-Assets Bundle Registration
+assets = Environment(app)
+
+vendor_bundle = Bundle(
+    'bower_components/jquery/dist/jquery.js',
+    'bower_components/angular/index.js',
+    'bower_components/angular-ui-router/release/angular-ui-router.js',
+    'bower_components/bootstrap/dist/js/bootstrap.js',
+    'bower_components/moment/moment.js',
+    filters='jsmin',
+    output='build/vendor.min.js'
+)
+
+style_bundle = Bundle(
+    'bower_components/bootstrap/dist/css/bootstrap.css',
+    'bower_components/bootstrap/dist/css/bootstrap-theme.css',
+    'bower_components/font-awesome/css/font-awesome.css',
+    filters='cssmin',
+    output='build/style.min.css'
+)
+
+assets.register('vendor', vendor_bundle)
+assets.register('style', style_bundle)
+
 
 # Load default config and override config from an environment variable
 app.config.update(dict(
@@ -14,6 +41,9 @@ app.config.update(dict(
     PASSWORD='default'
 ))
 app.config.from_envvar('APP_SETTINGS', silent=True)
+
+if __name__ == "__main__":
+    app.run(debug=True)
 
 
 def connect_db():
