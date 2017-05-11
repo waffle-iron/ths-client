@@ -29,6 +29,12 @@ vendor_bundle = Bundle(
     output='build/vendor.min.js'
 )
 
+app_bundle = Bundle(
+    'app.js',
+    filters='jsmin',
+    output='build/app.min.js'
+)
+
 style_bundle = Bundle(
     'bower_components/bootstrap/dist/css/bootstrap.css',
     'bower_components/bootstrap/dist/css/bootstrap-theme.css',
@@ -38,11 +44,11 @@ style_bundle = Bundle(
 )
 
 assets.register('vendor', vendor_bundle)
+assets.register('app', app_bundle)
 assets.register('style', style_bundle)
 
 
 # Load default config and override config from an environment variable
-
 if __name__ == "__main__":
     app.run(debug=True)
 
@@ -93,7 +99,7 @@ def about():
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('index.html')
 
 
 @app.route('/<tweetId>')
