@@ -13,21 +13,31 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./test.db'
+app.config['DEBUG'] = True
 app.config['SECRET_KEY'] = 'SECRETKEY'
 db = SQLAlchemy(app)
 
 # Flask-Assets Bundle Registration
+app.config['ASSETS_DEBUG'] = True
 assets = Environment(app)
 
 vendor_bundle = Bundle(
     'bower_components/jquery/dist/jquery.js',
-    'bower_components/angular/index.js',
+    'bower_components/angular/angular.js',
     'bower_components/angular-ui-router/release/angular-ui-router.js',
     'bower_components/bootstrap/dist/js/bootstrap.js',
     'bower_components/moment/moment.js',
-    filters='jsmin',
+    filters='rjsmin',
     output='build/vendor.min.js'
 )
+assets.register('vendor', vendor_bundle)
+
+app_bundle = Bundle(
+    './app.js',
+    filters='rjsmin',
+    output='build/app.min.js'
+)
+assets.register('app', app_bundle)
 
 style_bundle = Bundle(
     'bower_components/bootstrap/dist/css/bootstrap.css',
@@ -37,14 +47,9 @@ style_bundle = Bundle(
     output='build/style.min.css'
 )
 
-assets.register('vendor', vendor_bundle)
 assets.register('style', style_bundle)
 
-
-# Load default config and override config from an environment variable
-
-if __name__ == "__main__":
-    app.run(debug=True)
+bundles = [vendor_bundle, app_bundle, style_bundle]
 
 
 class User(db.Model):
@@ -63,13 +68,16 @@ class User(db.Model):
         self.first_name = first_name
         self.last_name = last_name
 
-    def is_authenticated(self):
+    @staticmethod
+    def is_authenticated():
         return True
 
-    def is_active(self):
+    @staticmethod
+    def is_active():
         return True
 
-    def is_anonymous(self):
+    @staticmethod
+    def is_anonymous():
         return False
 
     def get_id(self):
@@ -79,33 +87,24 @@ class User(db.Model):
         return '<User %r>' % (self.first_name+self.last_name)
 
 
-@app.route('/user/edit')
-@login_required
-def edit_info():
-    # show the user profile for that user
-    return render_template('edit.html', user=current_user)
-
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-
 @app.route('/')
+@app.route('/home')
+@app.route('/about')
+@app.route('/register')
+@app.route('/login')
+@app.route('/tweets')
 def home():
-    return render_template('home.html')
+    return render_template('index.html')
 
 
 @app.route('/<tweetId>')
 @login_required
 def tweet(tweetId):
-    return render_template('tweets.html', tweetId=tweetId)
+    return render_template('static/partials/tweets.html', tweetId=tweetId)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST'])
 def login():
-    if request.method == 'GET':
-        return render_template('login.html')
     email = request.form['email']
     password = request.form['password']
     registered_user = User.query.filter_by(email=email, password=password).first()
@@ -117,10 +116,8 @@ def login():
     return redirect(request.args.get('next') or url_for('home'))
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['POST'])
 def register():
-    if request.method == 'GET':
-        return render_template('register.html')
     user = User(request.form['email'], request.form['password'], request.form['first_name'],
                 request.form['last_name'])
     db.session.add(user)
