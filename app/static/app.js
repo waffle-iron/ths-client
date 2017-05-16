@@ -17,17 +17,19 @@
             $stateProvider
                 .state({
                     name: 'app',
+                    abstract: true,
                     url: '/',
                     templateUrl: '/static/app.html',
                     controller: 'AppCtrl'
                 })
                 .state({
                     name: 'app.home',
-                    url: '/home',
+                    url: '',
                     templateUrl: '/static/partials/home.html',
                     controller: 'AppCtrl'
                 });
 
+            $urlRouterProvider.when('/', '/home');
             $urlRouterProvider.otherwise('/home');
         }]);
 

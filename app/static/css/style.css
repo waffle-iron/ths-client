@@ -2,6 +2,11 @@ html, body, h1, h2, h3, h4, h5 {
     font-family: "RobotoDraft",
     "Roboto", sans-serif;
 }
+
+body {
+    padding-top: 50px;
+}
+
 .w3-bar-block .w3-bar-item {
     padding:16px
 }
