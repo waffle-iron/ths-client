@@ -9,6 +9,7 @@
     <meta name="author" content="">
     <title>Twitter Health Surveillance</title>
     <link rel="icon" href="../../favicon.ico">
+    <base href="/">
 
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href='https://fonts.googleapis.com/css?family=RobotoDraft' rel='stylesheet' type='text/css'>
@@ -27,12 +28,17 @@
   <body ng-app="thsClient">
     <ui-view></ui-view>
 
-    {% assets "vendor" %}
-      <script type="text/javascript" href="{{ ASSET_URL }}"></script>
-    {% endassets %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+    <script src="/static/app.js"></script>
 
-    {% assets "app" %}
-      <script type="text/javascript" href="{{ ASSET_URL }}"></script>
-    {% endassets %}
+{#    {% assets "vendor" %}#}
+{#      <script type="text/javascript" href="{{ ASSET_URL }}"></script>#}
+{#    {% endassets %}#}
+{##}
+{#    {% assets "app" %}#}
+{#      <script type="text/javascript" href="{{ ASSET_URL }}"></script>#}
+{#    {% endassets %}#}
   </body>
 </html>
