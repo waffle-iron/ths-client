@@ -91,7 +91,7 @@ class User(db.Model):
 @app.route('/home')
 @app.route('/about')
 @app.route('/register')
-@app.router('/login')
+@app.route('/login')
 @app.route('/tweets')
 def home():
     return render_template('index.html')
