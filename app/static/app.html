@@ -8,12 +8,14 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-left">
-                <i class="navbar-brand fa fa-twitter-square fa-2x"></i>
+                <i class="navbar-brand fa fa-twitter-square fa-2x" ui-sref="app.home"></i>
             </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li><a href="#features">About</a></li>
+                <li><a ui-sref=".about">About</a></li>
+                <li><a ui-sref=".login">Login</a></li>
+                <li><a ui-sref=".register">Register</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>

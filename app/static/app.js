@@ -25,8 +25,22 @@
                 .state({
                     name: 'app.home',
                     url: '',
-                    templateUrl: '/static/partials/home.html',
-                    controller: 'AppCtrl'
+                    templateUrl: '/static/partials/home.html'
+                })
+                .state({
+                    name: 'app.about',
+                    url: '',
+                    templateUrl: '/static/partials/about.html'
+                })
+                .state({
+                    name: 'app.login',
+                    url: '',
+                    templateUrl: '/static/partials/login.html'
+                })
+                .state({
+                    name: 'app.register',
+                    url: '',
+                    templateUrl: '/static/partials/register.html'
                 });
 
             $urlRouterProvider.when('/', '/home');
