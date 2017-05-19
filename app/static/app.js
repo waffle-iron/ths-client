@@ -5,7 +5,8 @@
     'use strict';
 
     var app = angular.module('thsClient', [
-        'ui.router'
+        'ui.router',
+        'thsClient.auth'
     ]);
 
     app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider',
