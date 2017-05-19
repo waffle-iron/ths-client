@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Twitter Health Surveillance</title>
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="icon" href="/static/favicon.ico">
     <base href="/">
 
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -28,17 +28,12 @@
   <body ng-app="thsClient">
     <ui-view></ui-view>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
-    <script src="/static/app.js"></script>
+    {% assets "vendor" %}
+      <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
 
-{#    {% assets "vendor" %}#}
-{#      <script type="text/javascript" href="{{ ASSET_URL }}"></script>#}
-{#    {% endassets %}#}
-{##}
-{#    {% assets "app" %}#}
-{#      <script type="text/javascript" href="{{ ASSET_URL }}"></script>#}
-{#    {% endassets %}#}
+    {% assets "app" %}
+      <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
   </body>
 </html>
