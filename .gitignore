@@ -53,6 +53,9 @@ coverage.xml
 *.log
 local_settings.py
 
+#PyCharm Stuff
+.idea/
+
 # Flask stuff:
 instance/
 .webassets-cache
@@ -90,8 +93,12 @@ ths-client/
 .ropeproject
 
 # SQLlite3 db
+<<<<<<< Updated upstream
 app/app.db
 
 # NPM / Bower
 app/static/bower_components
 node_modules
+=======
+app/app.db
+>>>>>>> Stashed changes
